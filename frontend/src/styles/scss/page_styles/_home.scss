@@ -1,4 +1,17 @@
 .main.home {
     background-color: $colorB4;
     
+    .col {
+        display: flex;
+        justify-content: center;
+    }
+
+    .day-greetings {
+        padding-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    .img-container {
+        width: 250px;
+    }
 }
