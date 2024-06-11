@@ -1,5 +1,11 @@
 // variables & functions
 @import 'variables';
 
-// base & layout
+// base
 @import 'base';
+
+// buttons
+@import 'component_styles/buttons';
+
+// pages
+@import 'page_styles/home';
