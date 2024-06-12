@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-const HideSideNav = () => {
+const hideSideNav = () => {
   var width = document.getElementById("mySidenav").style.width;
   if (width === "250px") {
     document.getElementById("mySidenav").style.width = "0px";
@@ -8,4 +8,4 @@ const HideSideNav = () => {
   }
 }
 
-export default HideSideNav
+export default hideSideNav

@@ -117,12 +117,50 @@
   color: rgba(255, 255, 255, 0.5); }
 
 .main.home {
-  background-color: #A7E6FF; }
-  .main.home .col {
+  background-image: linear-gradient(#A7E6FF, white); }
+  .main.home .row {
     display: flex;
-    justify-content: center; }
-  .main.home .day-greetings {
-    padding-top: 50px;
-    margin-bottom: 20px; }
-  .main.home .img-container {
-    width: 250px; }
+    flex-direction: column; }
+    .main.home .row .col {
+      display: flex;
+      justify-content: center; }
+    .main.home .row .day-greetings {
+      flex-direction: column;
+      padding-top: 50px;
+      margin-bottom: 50px;
+      text-align: center; }
+      .main.home .row .day-greetings p {
+        margin-bottom: 0px;
+        color: white;
+        line-height: 14pt;
+        font-size: 12pt;
+        font-style: italic;
+        font-weight: 200;
+        text-shadow: 0px 0px 10px #666666; }
+    .main.home .row .image-col {
+      margin-bottom: 50px; }
+      .main.home .row .image-col .img-container {
+        width: 250px; }
+    .main.home .row .name-col {
+      padding: 10px;
+      margin-bottom: 15px; }
+      .main.home .row .name-col .img-container {
+        width: 250px; }
+    .main.home .row .title-col h5 {
+      color: #666666; }
+    .main.home .row .title-col span {
+      font-weight: 900;
+      color: #29abe2; }
+  .main.home .row.homenav {
+    height: 200px;
+    background-color: red;
+    overflow-y: scroll; }
+    .main.home .row.homenav ul {
+      height: 330px;
+      padding-top: 50px;
+      padding-left: 0;
+      overflow-y: scroll;
+      list-style-type: none; }
+      .main.home .row.homenav ul li {
+        font-size: 36pt;
+        text-align: center; }

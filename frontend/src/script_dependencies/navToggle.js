@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-const NavToggle = () => {
+const navToggle = () => {
   var width = document.getElementById("mySidenav").style.width;
   if (width === "0px" || width === "") {
     document.getElementById("mySidenav").style.width = "250px";
@@ -12,4 +12,4 @@ const NavToggle = () => {
   }
 }
 
-export default NavToggle
+export default navToggle

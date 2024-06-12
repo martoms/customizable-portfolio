@@ -1,17 +1,79 @@
 .main.home {
-    background-color: $colorB4;
-    
-    .col {
+    background-image: linear-gradient($colorB4, white);
+
+    .row {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+
+        .col {
+            display: flex;
+            justify-content: center;
+        }
+    
+        .day-greetings {
+            flex-direction: column;
+            padding-top: 50px;
+            margin-bottom: $space6;
+            text-align: center;
+    
+            p {
+                margin-bottom: $space0;
+                color: white;
+                line-height: $font3;
+                font-size: $font2;
+                font-style: italic;
+                font-weight: 200;
+                text-shadow: 0px 0px 10px $logo2;
+            }
+        }
+    
+        .image-col {
+            margin-bottom: $space6;
+    
+            .img-container {
+                width: 250px;
+            }
+        }
+    
+        .name-col {
+            padding: $space2;
+            margin-bottom: $space3;
+    
+            .img-container {
+                width: 250px;
+            }
+        }
+
+        .title-col {
+
+            h5 {
+                color: $logo2;
+            }
+
+            span {
+                font-weight: 900;
+                color: $logo1
+            }
+        }
     }
 
-    .day-greetings {
-        padding-top: 50px;
-        margin-bottom: 20px;
-    }
+    .row.homenav {
+        height: 200px;
+        background-color: red;
+        overflow-y: scroll;
 
-    .img-container {
-        width: 250px;
+        ul {
+            height: 330px;
+            padding-top: 50px;
+            padding-left: 0;
+            overflow-y: scroll;
+            list-style-type: none;
+
+            li {
+                font-size: $font7;
+                text-align: center;
+            }
+        }
     }
+    
 }
