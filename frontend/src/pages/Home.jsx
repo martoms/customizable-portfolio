@@ -54,6 +54,7 @@ const Home = () => {
                     <h5>Hi, I am a <span ref={el} /></h5>
                 </div>
             </div>
+            <div className="selection"></div>
             <HomeNav />
         </div>
     );
