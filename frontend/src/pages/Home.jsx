@@ -8,6 +8,7 @@ import HomeNav from "../components/home/HomeNav";
 import dev from '../images/dev-bg.svg';
 import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
+import Modal1 from "../components/Modal1";
 
 const Home = () => {
     
@@ -18,10 +19,20 @@ const Home = () => {
     const titleRef = useRef(null);
     const [currentText, setCurrentText] = useState('');
     const [showCallout, setShowCallout] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-    setTimeout(() => {
-        setShowCallout(true);
-    }, 7000)
+    // for callout
+    useEffect(() => {
+        setTimeout(() => {
+            setShowCallout(true);
+        }, 7000)
+    }, [])
+
+    // for Modal
+    const handleShowModal = () => {
+        setShowModal(true);
+        if (showCallout === true) setShowCallout(false);
+    };
 
     useEffect(() => {
         const title = new Typed(titleRef.current, {
@@ -77,10 +88,10 @@ const Home = () => {
                             showCallout &&
                             <div className="callout">
                                 <p>Click Me!</p>
-                                <img src={callout} alt="callout" />
+                                <img src={ callout } alt="callout" />
                             </div>
                         }
-                        <img src={avatar} alt="avatar" />
+                        <img src={avatar} alt="avatar" onClick={ handleShowModal } />
                     </div>
                 </div>
                 <div className="col name-col">
@@ -96,6 +107,10 @@ const Home = () => {
             </div>
             <div className="selection"></div>
             <HomeNav />
+            <Modal1
+                showModal={ showModal }
+                setShowModal = { setShowModal }
+            />
         </div>
     );
 }
