@@ -7,6 +7,7 @@ import Typed from 'typed.js';
 import HomeNav from "../components/home/HomeNav";
 import dev from '../images/dev-bg.svg';
 import designer from '../images/designer-bg.svg';
+import callout from '../images/callout.svg';
 
 const Home = () => {
     
@@ -14,11 +15,16 @@ const Home = () => {
     const { day, timeOfDay } = dayAndTime();
 
     // for title
-    const el = useRef(null);
+    const titleRef = useRef(null);
     const [currentText, setCurrentText] = useState('');
+    const [showCallout, setShowCallout] = useState(false);
+
+    setTimeout(() => {
+        setShowCallout(true);
+    }, 7000)
 
     useEffect(() => {
-        const typed = new Typed(el.current, {
+        const title = new Typed(titleRef.current, {
           strings: ['Programmer', 'Graphic Designer'],
           startDelay: 500,
           typeSpeed: 100,
@@ -30,12 +36,14 @@ const Home = () => {
               setCurrentText(self.strings[arrayPos]);
           },
         });
+
     
         return () => {
-          typed.destroy();
+          title.destroy();
         };
     }, []);
 
+    // for background change
     const currentBG = () => {
         const illustration = document.querySelector('#illustration');
         if (currentText === 'Programmer') {
@@ -65,6 +73,13 @@ const Home = () => {
             <div className="row">
                 <div className="col image-col">
                     <div className="img-container">
+                        {
+                            showCallout &&
+                            <div className="callout">
+                                <p>Click Me!</p>
+                                <img src={callout} alt="callout" />
+                            </div>
+                        }
                         <img src={avatar} alt="avatar" />
                     </div>
                 </div>
@@ -76,7 +91,7 @@ const Home = () => {
             </div>
             <div className="row">
                 <div className="col title-col">
-                    <h5>Hi, I am a <span className="title" ref={el} /></h5>
+                    <h5>Hi, I am a <span className="title" ref={titleRef} /></h5>
                 </div>
             </div>
             <div className="selection"></div>
