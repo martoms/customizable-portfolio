@@ -9,6 +9,7 @@ import dev from '../images/dev-bg.svg';
 import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
 import Modal1 from "../components/Modal1";
+import getQuote from "../script_dependencies/getQuote";
 
 const Home = () => {
     
@@ -20,6 +21,8 @@ const Home = () => {
     const [currentText, setCurrentText] = useState('');
     const [showCallout, setShowCallout] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [quote, setQuote] = useState('');
+    const [err, setErr] = useState('');
 
     // for callout
     useEffect(() => {
@@ -30,10 +33,21 @@ const Home = () => {
 
     // for Modal
     const handleShowModal = () => {
+        // getQuote(setQuote, setErr);
         setShowModal(true);
         if (showCallout === true) setShowCallout(false);
     };
 
+    // console.log('quote', quote)
+    // console.log('err', err)
+
+    const modalData = {
+        title: 'Title goes here',
+        body: 'the body'
+    }
+
+
+    // for Title
     useEffect(() => {
         const title = new Typed(titleRef.current, {
           strings: ['Programmer', 'Graphic Designer'],
@@ -110,6 +124,7 @@ const Home = () => {
             <Modal1
                 showModal={ showModal }
                 setShowModal = { setShowModal }
+                modalData ={ modalData }
             />
         </div>
     );

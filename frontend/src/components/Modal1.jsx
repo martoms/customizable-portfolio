@@ -1,18 +1,20 @@
+/* eslint-disable react/prop-types */
 import { Modal, Button } from 'react-bootstrap';
 
-// eslint-disable-next-line react/prop-types
-const Modal1 = ({ showModal, setShowModal }) => {
+const Modal1 = ({ showModal, setShowModal, modalData }) => {
 
     const handleClose = () => {
         setShowModal(false);
     };
 
+    const { title, body } = modalData;
+
     return ( 
         <Modal show={showModal} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title> { title } </Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+            <Modal.Body> { body } </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
                 Close
