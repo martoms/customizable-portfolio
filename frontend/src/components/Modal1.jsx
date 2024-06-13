@@ -7,14 +7,19 @@ const Modal1 = ({ showModal, setShowModal, modalData }) => {
         setShowModal(false);
     };
 
-    const { title, body } = modalData;
+    const { title, body, author } = modalData;
 
     return ( 
         <Modal show={showModal} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title> { title } </Modal.Title>
             </Modal.Header>
-            <Modal.Body> { body } </Modal.Body>
+            <Modal.Body>
+                <div>
+                    <p>  { body }  </p>
+                    <p>  { author }  </p>
+                </div>
+            </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
                 Close

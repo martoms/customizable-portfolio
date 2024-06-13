@@ -9,7 +9,6 @@ import dev from '../images/dev-bg.svg';
 import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
 import Modal1 from "../components/Modal1";
-import getQuote from "../script_dependencies/getQuote";
 
 const Home = () => {
     
@@ -22,7 +21,8 @@ const Home = () => {
     const [showCallout, setShowCallout] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [quote, setQuote] = useState('');
-    const [err, setErr] = useState('');
+    const server= import.meta.env.VITE_REACT_API_URL;
+
 
     // for callout
     useEffect(() => {
@@ -33,17 +33,25 @@ const Home = () => {
 
     // for Modal
     const handleShowModal = () => {
-        // getQuote(setQuote, setErr);
+        fetch(`${server}/quotes`)
+            .then(res => res.json())
+            .then(data => setQuote(data))
+            .catch(err => console.log(err.message))
+
         setShowModal(true);
         if (showCallout === true) setShowCallout(false);
     };
 
-    // console.log('quote', quote)
-    // console.log('err', err)
+    const {
+        a: author,
+        q: text
+    } = quote
+
 
     const modalData = {
-        title: 'Title goes here',
-        body: 'the body'
+        title: 'Quotes:',
+        body: text,
+        author
     }
 
 
