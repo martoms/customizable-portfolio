@@ -152,3 +152,24 @@
     font-size: 10px;
 }
 
+// dropshadows
+@mixin dropshadow-1 {
+    filter: drop-shadow(0 0 5px $colorA3);
+}
+
+// animations
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+
+    }
+}
+
+@mixin rotation {
+    animation-name: rotate;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+}

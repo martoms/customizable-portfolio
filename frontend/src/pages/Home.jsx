@@ -10,6 +10,8 @@ import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
 import Modal1 from '../components/Modal1';
 import ellipsis from '../images/ellipse-dots.gif'
+import gear from '../images/gear.svg';
+import { Button } from 'react-bootstrap';
 
 const Home = () => {
     
@@ -22,7 +24,10 @@ const Home = () => {
     const [showCallout, setShowCallout] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [quote, setQuote] = useState('');
-    const [isPending, setIsPending] = useState(false)
+    const [joke, setJoke] = useState('');
+    const [isPending, setIsPending] = useState(false);
+    const [category, setCategory] = useState('jokes');
+    const [ask, setAsk] = useState(false);
     const server= import.meta.env.VITE_REACT_API_URL;
 
 
@@ -36,11 +41,17 @@ const Home = () => {
     // for Modal
     const handleShowModal = () => {
         setIsPending(true);
+        setAsk(false);
         setShowCallout(true);
-        fetch(`${server}/quotes`)
+        fetch(`${server}/${category}`)
             .then(res => res.json())
             .then(data => {
-                setQuote(data);
+                switch (category) {
+                    case 'quotes': setQuote(data);
+                        break;
+                    case 'jokes': setJoke(data);
+                        break;
+                }
                 setShowCallout(false);
                 setShowModal(true);
                 setIsPending(false);
@@ -54,14 +65,13 @@ const Home = () => {
 
     const {
         a: author,
-        q: text
+        q: quoteText
     } = quote
 
-
-    const modalData = {
+    const quoteData = {
         body: (
             <div className="quotes">
-                <p>{ text }</p>
+                <p>{ quoteText }</p>
                 <p>{ author }</p>
             </div>
         ),
@@ -72,6 +82,46 @@ const Home = () => {
         )
     }
 
+    const {
+        type,
+        joke: jokeText,
+        setup,
+        delivery
+    } = joke
+
+
+    const jokeData = {
+        body: (
+            <div className="jokes">
+                {
+                    type === 'single' ?
+                    <div className="single">
+                        <p>{ jokeText }</p>
+                    </div>
+                    :
+                    <div className="twoparts">
+                        <p>{ setup }</p>
+                        {
+                            !ask ? <Button onClick={() => setAsk(true)}>Tell me!</Button> :
+                            <Button disabled>{ delivery }</Button>
+                        }
+                    </div>
+                }
+            </div>
+        ),
+        attrib: (
+            <div className="attribution">
+                Jokes provided by <a href="https://v2.jokeapi.dev/" target="_blank">JokeAPI</a>
+            </div>
+        )
+    }
+
+    const modalData = () => {
+        switch (category) {
+            case 'quotes': return quoteData;
+            case 'jokes': return jokeData;
+        }
+    }
 
     // for Title
     useEffect(() => {
@@ -112,6 +162,7 @@ const Home = () => {
 
     return ( 
         <div className="container main home" onClick={hideSideNav}>
+            <img src={gear} alt="gear icon" />
             <div className="bg">
                 <img id="illustration" src={currentBG()} alt="background illustration" />
             </div>
@@ -155,7 +206,7 @@ const Home = () => {
             <Modal1
                 showModal={ showModal }
                 setShowModal = { setShowModal }
-                modalData ={ modalData }
+                modalData = { modalData() }
             />
         </div>
     );

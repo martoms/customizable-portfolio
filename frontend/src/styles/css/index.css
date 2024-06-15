@@ -115,6 +115,12 @@
 .attribution {
   font-size: 10px; }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
 .navbar-toggler {
   display: block !important;
   color: rgba(255, 255, 255, 0.5); }
@@ -122,6 +128,17 @@
 .main.home {
   position: relative;
   background-image: linear-gradient(#A7E6FF, white); }
+  .main.home img[alt='gear icon'] {
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    right: 10px;
+    height: 30px;
+    filter: drop-shadow(0 0 5px #5A72A0); }
+    .main.home img[alt='gear icon']:active {
+      animation-name: rotate;
+      animation-duration: 0.3s;
+      animation-timing-function: ease-in; }
   .main.home .bg {
     position: absolute;
     height: inherit;
@@ -236,8 +253,8 @@
         font-size: 36pt;
         line-height: 70px;
         text-align: center;
-        color: #3572EF;
-        text-shadow: 0 0 10px white;
+        color: white;
+        text-shadow: 0 0 10px #83B4FF;
         font-weight: 800; }
 
 .quotes p:first-child {
@@ -251,3 +268,12 @@
   font-weight: 600; }
   .quotes p:last-child::before {
     content: '- '; }
+
+.jokes .single p {
+  text-align: center; }
+  .jokes .single p::before, .jokes .single p::after {
+    content: '"'; }
+
+.jokes .twoparts {
+  display: flex;
+  flex-direction: column; }

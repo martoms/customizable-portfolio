@@ -9,6 +9,18 @@ const quotes_get = (req, res) => {
     })
 }
 
+const jokes_get = (req, res) => {
+    fetch('https://v2.jokeapi.dev/joke/Pun?blacklistFlags=religious,racist,sexist,explicit')
+    .then(response => response.json())
+    .then(data => {
+        res.status(200).json(data)
+    })
+    .catch(err => {
+        res.status(500).json(err.message)
+    })
+}
+
 module.exports = {
-    quotes_get
+    quotes_get,
+    jokes_get
 }

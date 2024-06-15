@@ -2,6 +2,19 @@
     position: relative;
     background-image: linear-gradient($colorB4, white),;
 
+    img[alt='gear icon'] {
+        position: absolute;
+        z-index: 2;
+        top: 10px;
+        right: 10px;
+        height: 30px;
+        @include dropshadow-1;
+
+        &:active {
+            @include rotation
+        }
+    }
+
     .bg {
         position: absolute;
         height: inherit;
@@ -160,8 +173,8 @@
                 font-size: $font7;
                 line-height: 70px;
                 text-align: center;
-                color: $colorB2;
-                text-shadow: 0 0 10px white;
+                color: white;
+                text-shadow: 0 0 10px $colorA2;
                 font-weight: 800;
             }
         }
@@ -187,5 +200,24 @@
         &::before {
             content: '- ';
         }
+    }
+}
+
+.jokes {
+    .single {
+        p {
+            text-align: center;
+            &::before,
+            &::after {
+                content: '"';
+            }
+        }
+    }
+
+    .twoparts {
+        display: flex;
+        flex-direction: column;
+
+        
     }
 }
