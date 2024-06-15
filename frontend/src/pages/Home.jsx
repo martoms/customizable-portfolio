@@ -8,10 +8,11 @@ import HomeNav from '../components/home/HomeNav';
 import dev from '../images/dev-bg.svg';
 import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
-import Modal1 from '../components/Modal1';
+import Modal1 from '../components/modals/Modal1';
 import ellipsis from '../images/ellipse-dots.gif'
 import gear from '../images/gear.svg';
-import { Button } from 'react-bootstrap';
+import Settings from '../components/modals/Settings';
+import { Button, Form } from 'react-bootstrap';
 
 const Home = () => {
     
@@ -22,11 +23,12 @@ const Home = () => {
     const titleRef = useRef(null);
     const [currentText, setCurrentText] = useState('');
     const [showCallout, setShowCallout] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [showThoughts, setShowThoughts] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
     const [quote, setQuote] = useState('');
     const [joke, setJoke] = useState('');
     const [isPending, setIsPending] = useState(false);
-    const [category, setCategory] = useState('jokes');
+    const [category, setCategory] = useState('quotes');
     const [ask, setAsk] = useState(false);
     const server= import.meta.env.VITE_REACT_API_URL;
 
@@ -38,8 +40,8 @@ const Home = () => {
         }, 7000)
     }, [])
 
-    // for Modal
-    const handleShowModal = () => {
+    // for Thoughts on click
+    const handleShowThoughts = () => {
         setIsPending(true);
         setAsk(false);
         setShowCallout(true);
@@ -53,7 +55,7 @@ const Home = () => {
                         break;
                 }
                 setShowCallout(false);
-                setShowModal(true);
+                setShowThoughts(true);
                 setIsPending(false);
             })
             .catch(err => console.log(err.message))
@@ -63,6 +65,7 @@ const Home = () => {
         <img src={ellipsis} alt='loading' />
     )
 
+    // for quotes
     const {
         a: author,
         q: quoteText
@@ -82,6 +85,7 @@ const Home = () => {
         )
     }
 
+    // for jokes
     const {
         type,
         joke: jokeText,
@@ -116,12 +120,38 @@ const Home = () => {
         )
     }
 
+    // for thoughts modal data
     const modalData = () => {
         switch (category) {
             case 'quotes': return quoteData;
             case 'jokes': return jokeData;
         }
     }
+
+    // for settings
+    const form = (
+        <div>
+            <p>Choose what you want me to say:</p>
+            <Form>
+                <Form.Check 
+                    name='category'
+                    id='quotesOpt' 
+                    type='radio' 
+                    label='Quotes'
+                    onChange={() => setCategory('quotes')}
+                    checked={category === 'quotes'}
+                />
+                <Form.Check 
+                    name='category'
+                    id='jokesOpt' 
+                    type='radio' 
+                    label='Jokes'
+                    onChange={() => setCategory('jokes')}
+                    checked={category==='jokes'}
+                />
+            </Form>
+        </div>
+    )
 
     // for Title
     useEffect(() => {
@@ -162,7 +192,7 @@ const Home = () => {
 
     return ( 
         <div className="container main home" onClick={hideSideNav}>
-            <img src={gear} alt="gear icon" />
+            <img src={gear} alt="gear icon" onClick={() => setShowSettings(true)} />
             <div className="bg">
                 <img id="illustration" src={currentBG()} alt="background illustration" />
             </div>
@@ -187,7 +217,7 @@ const Home = () => {
                                 <img src={ callout } alt="callout" />
                             </div>
                         }
-                        <img src={avatar} alt="avatar" onClick={ handleShowModal } />
+                        <img src={avatar} alt="avatar" onClick={ handleShowThoughts } />
                     </div>
                 </div>
                 <div className="col name-col">
@@ -204,9 +234,14 @@ const Home = () => {
             <div className="selection"></div>
             <HomeNav />
             <Modal1
-                showModal={ showModal }
-                setShowModal = { setShowModal }
-                modalData = { modalData() }
+                showModal={ showThoughts }
+                setShowModal={ setShowThoughts }
+                modalData={ modalData() }
+            />
+            <Settings
+                showModal={ showSettings }
+                setShowModal={ setShowSettings }
+                form={ form }
             />
         </div>
     );

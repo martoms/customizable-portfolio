@@ -277,3 +277,16 @@
 .jokes .twoparts {
   display: flex;
   flex-direction: column; }
+
+.settings .modal-dialog {
+  background-color: transparent; }
+  .settings .modal-dialog .modal-content {
+    background-color: transparent; }
+    .settings .modal-dialog .modal-content .modal-body {
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(1px); }
+      .settings .modal-dialog .modal-content .modal-body label {
+        font-weight: 600;
+        color: #3572ef;
+        font-size: 14pt; }

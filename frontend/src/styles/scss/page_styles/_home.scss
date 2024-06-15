@@ -221,3 +221,26 @@
         
     }
 }
+
+.settings {
+
+    .modal-dialog {
+        background-color: transparent;
+        
+        .modal-content {
+            background-color: transparent;
+            
+            .modal-body {
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(1px);
+
+                label {
+                    font-weight: 600;
+                    color: $colorB2;
+                    font-size: $font3;
+                }
+            }
+        }
+    }
+}
