@@ -1,14 +1,15 @@
-import { useRef, useEffect, useState } from "react";
-import hideSideNav from "../script_dependencies/hideSideNav";
+import { useRef, useEffect, useState } from 'react';
+import hideSideNav from '../script_dependencies/hideSideNav';
 import avatar from '../images/martoms-transparent.svg';
-import dayAndTime from "../script_dependencies/dayAndTime";
+import dayAndTime from '../script_dependencies/dayAndTime';
 import name from '../images/name-logo.svg';
 import Typed from 'typed.js';
-import HomeNav from "../components/home/HomeNav";
+import HomeNav from '../components/home/HomeNav';
 import dev from '../images/dev-bg.svg';
 import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
-import Modal1 from "../components/Modal1";
+import Modal1 from '../components/Modal1';
+import ellipsis from '../images/ellipse-dots.gif'
 
 const Home = () => {
     
@@ -21,6 +22,7 @@ const Home = () => {
     const [showCallout, setShowCallout] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [quote, setQuote] = useState('');
+    const [isPending, setIsPending] = useState(false)
     const server= import.meta.env.VITE_REACT_API_URL;
 
 
@@ -33,14 +35,22 @@ const Home = () => {
 
     // for Modal
     const handleShowModal = () => {
+        setIsPending(true);
+        setShowCallout(true);
         fetch(`${server}/quotes`)
             .then(res => res.json())
-            .then(data => setQuote(data))
+            .then(data => {
+                setQuote(data);
+                setShowCallout(false);
+                setShowModal(true);
+                setIsPending(false);
+            })
             .catch(err => console.log(err.message))
-
-        setShowModal(true);
-        if (showCallout === true) setShowCallout(false);
     };
+
+    const loading = (
+        <img src={ellipsis} alt='loading' />
+    )
 
     const {
         a: author,
@@ -117,7 +127,12 @@ const Home = () => {
                         {
                             showCallout &&
                             <div className="callout">
-                                <p>Click Me!</p>
+                                {
+                                    !isPending ?
+                                    <p>Click Me!</p>
+                                    :
+                                    loading
+                                }
                                 <img src={ callout } alt="callout" />
                             </div>
                         }

@@ -103,10 +103,19 @@
                         font-weight: 600;
                     }
                     
-                    img {
+                    img[alt='callout'] {
                         height: 100%;
                         filter: drop-shadow(2px 10px 5px rgba(57, 57, 57, 0.7));
                     }
+
+                    img[alt='loading'] {
+                        position: absolute;
+                        z-index: 1;
+                        width: 50%;
+                        top: 10px;
+                        left: 25px;
+                    }
+
                 }
             }
         }

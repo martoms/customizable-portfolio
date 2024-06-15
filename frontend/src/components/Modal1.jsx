@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 const Modal1 = ({ showModal, setShowModal, modalData }) => {
 
