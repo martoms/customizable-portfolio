@@ -49,9 +49,17 @@ const Home = () => {
 
 
     const modalData = {
-        title: 'Quotes:',
-        body: text,
-        author
+        body: (
+            <div className="quotes">
+                <p>{ text }</p>
+                <p>{ author }</p>
+            </div>
+        ),
+        attrib: (
+            <div className="attribution">
+                Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
+            </div>
+        )
     }
 
 

@@ -112,6 +112,9 @@
     width: 90%;
     margin: 1rem 0 1rem 0.9rem; }
 
+.attribution {
+  font-size: 10px; }
+
 .navbar-toggler {
   display: block !important;
   color: rgba(255, 255, 255, 0.5); }
@@ -230,3 +233,15 @@
         color: #3572EF;
         text-shadow: 0 0 10px white;
         font-weight: 800; }
+
+.quotes p:first-child {
+  font-style: italic;
+  text-align: center; }
+  .quotes p:first-child::before, .quotes p:first-child::after {
+    content: '"'; }
+
+.quotes p:last-child {
+  text-align: right;
+  font-weight: 600; }
+  .quotes p:last-child::before {
+    content: '- '; }

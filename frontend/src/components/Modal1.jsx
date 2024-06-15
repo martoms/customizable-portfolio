@@ -7,7 +7,7 @@ const Modal1 = ({ showModal, setShowModal, modalData }) => {
         setShowModal(false);
     };
 
-    const { title, body, author } = modalData;
+    const { title, body, attrib } = modalData;
 
     return ( 
         <Modal show={showModal} onHide={handleClose}>
@@ -15,18 +15,10 @@ const Modal1 = ({ showModal, setShowModal, modalData }) => {
             <Modal.Title> { title } </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div>
-                    <p>  { body }  </p>
-                    <p>  { author }  </p>
-                </div>
+                { body }
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-                Save Changes
-            </Button>
+                { attrib }
             </Modal.Footer>
         </Modal>
     );

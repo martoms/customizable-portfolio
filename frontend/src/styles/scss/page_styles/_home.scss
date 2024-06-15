@@ -159,3 +159,24 @@
     }
 
 }
+
+.quotes {
+    p:first-child {
+        font-style: italic;
+        text-align: center;
+
+        &::before,
+        &::after {
+            content: '"';
+        }
+    }
+
+    p:last-child {
+        text-align: right;
+        font-weight: 600;
+
+        &::before {
+            content: '- ';
+        }
+    }
+}
