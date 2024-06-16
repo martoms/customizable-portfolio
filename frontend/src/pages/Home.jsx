@@ -14,6 +14,8 @@ import gear from '../images/gear.svg';
 import Settings from '../components/modals/Settings';
 import he from 'he';
 import { Button, Form } from 'react-bootstrap';
+import correctIcon from '../images/correct.svg';
+import wrongIcon from '../images/wrong.svg';
 
 const Home = () => {
     
@@ -30,8 +32,11 @@ const Home = () => {
     const [joke, setJoke] = useState({});
     const [trivia, setTrivia] = useState({});
     const [options, setOptions] = useState([]);
+    const [showAnswer, setShowAnswer] = useState(false);
+    const [score, setScore] = useState(0);
+    const [mistake, setMistake] = useState(0);
     const [isPending, setIsPending] = useState(false);
-    const [category, setCategory] = useState('trivias');
+    const [category, setCategory] = useState('quotes');
     const [ask, setAsk] = useState(false);
     const server= import.meta.env.VITE_REACT_API_URL;
 
@@ -144,28 +149,70 @@ const Home = () => {
 
             setOptions(opts)
         }
-    }, [incorrect])
+    }, [incorrect, correct])
     
+    const verifyAnswer = (e) => {
+        if (!showAnswer) {
+            e.target.classList.add('active')
+            setShowAnswer(true);
+            const selected = e.target.innerHTML;
+            const choices = document.querySelectorAll('.trivias li');
+            choices.forEach(choice => {
+                const value = choice.innerHTML;
+
+                if (value === selected && value === correct) {
+                    choice.classList.add('correct')
+                } else if (value === selected && value !== correct) {
+                    choice.classList.add('wrong')
+                } else if (value !== selected && value === correct) {
+                    choice.classList.add('greyedout')
+                    choice.classList.add('right')
+                } else {
+                    choice.classList.add('greyedout')
+                }
+            })
+
+            if (selected === correct) {
+                setScore(score + 1);
+            } else {
+                setMistake(mistake + 1);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (!showThoughts) setShowAnswer(false)
+    }, [showThoughts])
 
     const triviaOpt = options?.map((opt, k) => (
-        <li key={k}>
-            {opt}
+        <li key={k} onClick={(e) => verifyAnswer(e)}>
+            { category === 'trivias' && showThoughts && he.decode(opt) }
         </li>
     ))
 
     const triviaData = {
-        title: showThoughts && he.decode(trivCat),
+        title: (
+            <div className="category">
+                { category === 'trivias' && showThoughts && he.decode(trivCat) }
+            </div>
+        ),
         body: (
-            <>
-                <div className="trivias">
-                    <div className="question">
-                        { showThoughts && he.decode(question) }
+            <div className="trivias">
+                <div className="stat">
+                    <div className="score">
+                        <img src={correctIcon} alt="correct icon" />{ score }
                     </div>
+                    <div className="mistake">
+                        <img src={wrongIcon} alt="wrong icon" />{ mistake }
+                    </div>
+                </div>
+                <div className="question">
+                    { category === 'trivias' && showThoughts && he.decode(question) }
                 </div>
                 <ul>
                     { triviaOpt }
                 </ul>
-            </>
+            </div>
         ),
         attrib: (
             <div className="attribution">
@@ -203,6 +250,14 @@ const Home = () => {
                     label='Jokes'
                     onChange={() => setCategory('jokes')}
                     checked={category==='jokes'}
+                />
+                <Form.Check 
+                    name='category'
+                    id='triviasOpt' 
+                    type='radio' 
+                    label='Trivias'
+                    onChange={() => setCategory('trivias')}
+                    checked={category==='trivias'}
                 />
             </Form>
         </div>

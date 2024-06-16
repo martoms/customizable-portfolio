@@ -244,3 +244,71 @@
         }
     }
 }
+
+.category {
+    font-weight: 600;
+    font-size: $font2;
+}
+
+.trivias {
+
+    .stat {
+        display: flex;
+        margin-bottom: $space3;
+        justify-content: flex-end;
+
+        div {
+            display: flex;
+            align-items: center;
+            margin-left: $space5;
+            font-weight: 600;
+
+            img {
+                height: 20px;
+                margin-right: $space1;
+            }
+        }
+    }
+
+    ul {
+        margin-top: $space2;
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-flow: row wrap;
+
+        li {
+            text-align: center;
+            justify-content: center;
+            align-content: center;
+            background-color: $colorB2;
+            color:  white;
+            align-items: center;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            width: calc(50% - 10px);
+            min-height: 60px;
+        }
+
+        .active {
+            @include press
+        }
+
+        li.wrong {
+            background-color: red;
+        }
+
+        li.correct {
+            background-color: $colorC2;
+        }
+
+        li.greyedout {
+            background-color: $logo2;
+        }
+
+        li.right {
+            border: 5px solid $colorC2;
+        }
+    }
+}
