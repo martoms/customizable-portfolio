@@ -39,12 +39,16 @@ const Home = () => {
     const [ask, setAsk] = useState(false);
     const server= import.meta.env.VITE_REACT_API_URL;
 
+    // activate server
+    useEffect(() => {
+        fetch(server).then(res => res.json()).then(data => console.log(data))
+    }, [server])
 
     // for callout
     useEffect(() => {
         setTimeout(() => {
             setShowCallout(true);
-        }, 7000)
+        }, 3000)
     }, [])
 
     // for Thoughts on click
@@ -187,7 +191,23 @@ const Home = () => {
         <li key={k} onClick={(e) => verifyAnswer(e)}>
             { category === 'trivias' && showThoughts && he.decode(opt) }
         </li>
-    ))
+    ));
+
+    const Rating = () => {
+        const total = score + mistake;
+        const percent = ((score / total) * 100).toFixed(1);
+        let indicator;
+        if (percent < 75) indicator = 'poor'
+        else if (percent < 90) indicator = 'avg'
+        else if (percent >= 90) indicator = 'ok'
+
+        return (
+            <span className={`percent ${indicator}`}>
+                { isNaN(percent) ? 0 : percent }%
+            </span>
+        )
+        
+    }
 
     const triviaData = {
         title: (
@@ -198,6 +218,9 @@ const Home = () => {
         body: (
             <div className="trivias">
                 <div className="stat">
+                    <div className="rating">
+                        <span>Rating: <Rating /></span>
+                    </div>
                     <div className="score">
                         <img src={correctIcon} alt="correct icon" />{ score }
                     </div>

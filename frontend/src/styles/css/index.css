@@ -313,6 +313,17 @@
     .trivias .stat div img {
       height: 20px;
       margin-right: 5px; }
+  .trivias .stat .rating {
+    flex-grow: 1;
+    margin-left: 0; }
+    .trivias .stat .rating .percent {
+      font-weight: 800; }
+    .trivias .stat .rating .poor {
+      color: red; }
+    .trivias .stat .rating .avg {
+      color: yellow; }
+    .trivias .stat .rating .ok {
+      color: green; }
 
 .trivias ul {
   margin-top: 10px;
@@ -325,6 +336,7 @@
     justify-content: center;
     align-content: center;
     background-color: #3572ef;
+    font-size: 10pt;
     color: white;
     align-items: center;
     padding: 5px;
