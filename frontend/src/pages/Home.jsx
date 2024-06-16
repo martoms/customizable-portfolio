@@ -12,6 +12,7 @@ import Modal1 from '../components/modals/Modal1';
 import ellipsis from '../images/ellipse-dots.gif'
 import gear from '../images/gear.svg';
 import Settings from '../components/modals/Settings';
+import he from 'he';
 import { Button, Form } from 'react-bootstrap';
 
 const Home = () => {
@@ -25,10 +26,12 @@ const Home = () => {
     const [showCallout, setShowCallout] = useState(false);
     const [showThoughts, setShowThoughts] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
-    const [quote, setQuote] = useState('');
-    const [joke, setJoke] = useState('');
+    const [quote, setQuote] = useState({});
+    const [joke, setJoke] = useState({});
+    const [trivia, setTrivia] = useState({});
+    const [options, setOptions] = useState([]);
     const [isPending, setIsPending] = useState(false);
-    const [category, setCategory] = useState('quotes');
+    const [category, setCategory] = useState('trivias');
     const [ask, setAsk] = useState(false);
     const server= import.meta.env.VITE_REACT_API_URL;
 
@@ -52,6 +55,8 @@ const Home = () => {
                     case 'quotes': setQuote(data);
                         break;
                     case 'jokes': setJoke(data);
+                        break;
+                    case 'trivias': setTrivia(data);
                         break;
                 }
                 setShowCallout(false);
@@ -107,7 +112,7 @@ const Home = () => {
                         <p>{ setup }</p>
                         {
                             !ask ? <Button onClick={() => setAsk(true)}>Tell me!</Button> :
-                            <Button disabled>{ delivery }</Button>
+                            <Button variant='secondary' disabled>{ delivery }</Button>
                         }
                     </div>
                 }
@@ -120,11 +125,61 @@ const Home = () => {
         )
     }
 
+    // for trivias
+    const {
+        category: trivCat,
+        question,
+        correct_answer: correct,
+        incorrect_answers: incorrect
+    } = trivia
+
+    useEffect(() => {
+        if (incorrect) {
+            let opts = [...incorrect, correct];
+    
+            for (let i = opts.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [opts[i], opts[j]] = [opts[j], opts[i]];
+            }
+
+            setOptions(opts)
+        }
+    }, [incorrect])
+    
+
+    const triviaOpt = options?.map((opt, k) => (
+        <li key={k}>
+            {opt}
+        </li>
+    ))
+
+    const triviaData = {
+        title: showThoughts && he.decode(trivCat),
+        body: (
+            <>
+                <div className="trivias">
+                    <div className="question">
+                        { showThoughts && he.decode(question) }
+                    </div>
+                </div>
+                <ul>
+                    { triviaOpt }
+                </ul>
+            </>
+        ),
+        attrib: (
+            <div className="attribution">
+                Trivia questions provided by <a href="https://opentdb.com/" target="_blank">Open Trivia Database</a>
+            </div>
+        )
+    }
+
     // for thoughts modal data
     const modalData = () => {
         switch (category) {
             case 'quotes': return quoteData;
             case 'jokes': return jokeData;
+            case 'trivias': return triviaData;
         }
     }
 
