@@ -1,21 +1,21 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import hideSideNav from '../script_dependencies/hideSideNav';
 import avatar from '../images/martoms-transparent.svg';
 import dayAndTime from '../script_dependencies/dayAndTime';
 import name from '../images/name-logo.svg';
-import Typed from 'typed.js';
 import HomeNav from '../components/home/HomeNav';
-import dev from '../images/dev-bg.svg';
-import designer from '../images/designer-bg.svg';
 import callout from '../images/callout.svg';
+import Title from '../components/home/Title';
 import Modal1 from '../components/modals/Modal1';
 import ellipsis from '../images/ellipse-dots.gif'
 import gear from '../images/gear.svg';
 import Settings from '../components/modals/Settings';
 import he from 'he';
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import correctIcon from '../images/correct.svg';
 import wrongIcon from '../images/wrong.svg';
+import HomeSettings from '../components/home/HomeSettings';
+import currentBG from '../script_dependencies/currentBG';
 
 const Home = () => {
     
@@ -23,7 +23,6 @@ const Home = () => {
     const { day, timeOfDay } = dayAndTime();
 
     // for title
-    const titleRef = useRef(null);
     const [currentText, setCurrentText] = useState('');
     const [showCallout, setShowCallout] = useState(false);
     const [showThoughts, setShowThoughts] = useState(false);
@@ -230,81 +229,11 @@ const Home = () => {
         }
     }
 
-    // for settings
-    const form = (
-        <div>
-            <p>Choose what you want me to say:</p>
-            <Form>
-                <Form.Check 
-                    name='category'
-                    id='quotesOpt' 
-                    type='radio' 
-                    label='Quotes'
-                    onChange={() => setCategory('quotes')}
-                    checked={category === 'quotes'}
-                />
-                <Form.Check 
-                    name='category'
-                    id='jokesOpt' 
-                    type='radio' 
-                    label='Jokes'
-                    onChange={() => setCategory('jokes')}
-                    checked={category==='jokes'}
-                />
-                <Form.Check 
-                    name='category'
-                    id='triviasOpt' 
-                    type='radio' 
-                    label='Trivias'
-                    onChange={() => setCategory('trivias')}
-                    checked={category==='trivias'}
-                />
-            </Form>
-        </div>
-    )
-
-    // for Title
-    useEffect(() => {
-        const title = new Typed(titleRef.current, {
-          strings: ['Programmer', 'Graphic Designer'],
-          startDelay: 500,
-          typeSpeed: 100,
-          backDelay: 3000,
-          backSpeed: 100,
-          loop: true,
-          loopCount: Infinity,
-          onStringTyped: (arrayPos, self) => {
-              setCurrentText(self.strings[arrayPos]);
-          },
-        });
-
-    
-        return () => {
-          title.destroy();
-        };
-    }, []);
-
-    // for background change
-    const currentBG = () => {
-        const illustration = document.querySelector('#illustration');
-        if (currentText === 'Programmer') {
-            illustration.style.mixBlendMode = 'color-dodge'
-            return dev;
-        }
-
-        if (currentText === 'Graphic Designer') {
-            illustration.style.mixBlendMode = 'overlay'
-            return designer;
-        }
-
-        return dev;
-    }
-
     return ( 
         <div className="container main home" onClick={hideSideNav}>
             <img src={gear} alt="gear icon" onClick={() => setShowSettings(true)} />
             <div className="bg">
-                <img id="illustration" src={currentBG()} alt="background illustration" />
+                <img id="illustration" src={currentBG(currentText)} alt="background illustration" />
             </div>
             <div className="row">
                 <div className="col day-greetings">
@@ -338,7 +267,10 @@ const Home = () => {
             </div>
             <div className="row">
                 <div className="col title-col">
-                    <h5>Hi, I am a <span className="title" ref={titleRef} /></h5>
+                    <h5>
+                        {`Hi, I am a `}
+                        <Title setCurrentText={ setCurrentText } />
+                    </h5>
                 </div>
             </div>
             <div className="selection"></div>
@@ -351,7 +283,7 @@ const Home = () => {
             <Settings
                 showModal={ showSettings }
                 setShowModal={ setShowSettings }
-                form={ form }
+                form={ HomeSettings(category, setCategory) }
             />
         </div>
     );
